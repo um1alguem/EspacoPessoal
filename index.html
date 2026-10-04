@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Espaço Pessoal</title>
+    <meta name="theme-color" content="#F8F9FA">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Caveat:wght@500;600;700&family=Karla:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="app-container">
+
+        <section id="tela-inicio" class="tela-secao ativa">
+            <header class="boas-vindas">
+                <h1>Painel Pessoal</h1>
+                <p class="data-hoje" id="data-topo"></p>
+            </header>
+
+            <div class="card-frase-container">
+                <div class="indicador-visual"></div>
+                <button class="btn-principal" id="btn-frase">Revelar pensamento do dia</button>
+                <div class="balao-frase oculto" id="caixa-frase">
+                    <p class="texto-frase"></p>
+                </div>
+            </div>
+
+            <div class="resumo-grid">
+                <div class="mini-card card-vinho">
+                    <h3>Humor Atual</h3>
+                    <p class="status-texto" id="resumo-humor">Não registrado</p>
+                </div>
+                <div class="mini-card card-azul">
+                    <h3>Hidratação</h3>
+                    <p class="status-texto" id="resumo-agua">0 de 2 litros</p>
+                </div>
+                <div class="mini-card card-marrom">
+                    <h3>Descanso</h3>
+                    <p class="status-texto" id="resumo-sono">Não registrado</p>
+                </div>
+                <div class="mini-card card-rosa">
+                    <h3>Refeições</h3>
+                    <p class="status-texto" id="resumo-refeicoes">0 concluídas</p>
+                </div>
+            </div>
+
+            <div class="card-habitos-hoje" id="card-habitos-hoje">
+                <h3>Hábitos de hoje</h3>
+                <p class="status-texto" id="texto-habitos-hoje">Nenhuma lista criada ainda</p>
+                <div class="barra-progresso-container">
+                    <div class="barra-progresso-fluido" id="barra-habitos-hoje"></div>
+                </div>
+                <p class="dica-card-habitos">Toque para abrir a rotina de hoje</p>
+            </div>
+
+        </section>
+
+        <section id="tela-diario" class="tela-secao">
+            <div class="navegador-mes">
+                <button class="btn-mes-nav" id="btn-mes-anterior-diario">←</button>
+                <h2 class="titulo-secao" id="nome-mes-diario">Mapeamento de Sentimentos</h2>
+                <button class="btn-mes-nav" id="btn-mes-proximo-diario">→</button>
+            </div>
+            <p class="subtitulo-secao">Selecione o quadrado do dia para registrar ou rever suas memórias.</p>
+
+            <div class="grade-pixels" id="calendario-pixels"></div>
+        </section>
+
+        <section id="tela-rotina" class="tela-secao">
+            <div class="navegador-mes">
+                <button class="btn-mes-nav" id="btn-mes-anterior-rotina">←</button>
+                <h2 class="titulo-secao" id="nome-mes-rotina">Rotina do Mês</h2>
+                <button class="btn-mes-nav" id="btn-mes-proximo-rotina">→</button>
+            </div>
+            <p class="subtitulo-secao">Selecione o dia para registrar água, sono, refeições, exercícios e suas listas de hábitos.</p>
+
+            <div class="grade-pixels" id="calendario-rotina-pixels"></div>
+        </section>
+
+        <section id="tela-listas" class="tela-secao">
+            <h2 class="titulo-secao">Minhas Listas</h2>
+            <p class="subtitulo-secao">Crie listas de hábitos com o título e a finalidade que quiser. Elas aparecem em todos os dias da Rotina.</p>
+
+            <button class="btn-principal" id="btn-nova-lista">+ Nova lista</button>
+
+            <div class="grade-listas" id="container-listas"></div>
+        </section>
+
+        <section id="tela-estatisticas" class="tela-secao">
+            <div class="navegador-mes">
+                <button class="btn-mes-nav" id="btn-mes-anterior-stats">←</button>
+                <h2 class="titulo-secao" id="nome-mes-stats">Estatísticas do Mês</h2>
+                <button class="btn-mes-nav" id="btn-mes-proximo-stats">→</button>
+            </div>
+            <p class="subtitulo-secao">Um resumo do seu mês com base no que você registrou.</p>
+
+            <div class="bloco-estatistica">
+                <h3>Humor ao longo do mês</h3>
+                <div id="grafico-humor"></div>
+            </div>
+
+            <div class="resumo-grid">
+                <div class="mini-card card-azul">
+                    <h3>Sono médio</h3>
+                    <p class="status-texto" id="stat-sono-medio">Sem dados</p>
+                </div>
+                <div class="mini-card card-vinho">
+                    <h3>Água média/dia</h3>
+                    <p class="status-texto" id="stat-agua-media">Sem dados</p>
+                </div>
+                <div class="mini-card card-rosa">
+                    <h3>Refeições no mês</h3>
+                    <p class="status-texto" id="stat-refeicoes-total">0</p>
+                </div>
+                <div class="mini-card card-marrom">
+                    <h3>Exercício no mês</h3>
+                    <p class="status-texto" id="stat-exercicio-total">0 min</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="modal-sobreposicao oculto" id="modal-diario">
+        <div class="modal-conteudo">
+            <div class="modal-cabecalho">
+                <h3 id="modal-titulo-dia">Registro do Dia</h3>
+                <button class="btn-fechar-modal" id="btn-fechar-modal">Fechar</button>
+            </div>
+
+            <div class="modal-corpo">
+                <p class="rotulo-input">Como define sua mente hoje?</p>
+                <div class="grupo-botoes-humor">
+                    <button class="btn-humor" data-humor="Feliz">Feliz</button>
+                    <button class="btn-humor" data-humor="Calmo">Calmo</button>
+                    <button class="btn-humor" data-humor="Cansado">Cansado</button>
+                    <button class="btn-humor" data-humor="Produtivo">Produtivo</button>
+                    <button class="btn-humor" id="btn-humor-outro">Outro</button>
+                </div>
+
+                <div class="campo-outro-humor oculto" id="container-humor-outro">
+                    <p class="rotulo-input">Digite o que está sentindo:</p>
+                    <input type="text" class="input-editorial" id="input-humor-personalizado"
+                        placeholder="Ex: Ansioso, Animado...">
+                </div>
+
+                <div class="campo-nota-diario">
+                    <p class="rotulo-input">Escreva sobre o seu dia:</p>
+                    <textarea class="textarea-editorial" id="texto-nota-diario"
+                        placeholder="Como foi o seu dia? Quais foram os seus pensamentos?"></textarea>
+                </div>
+
+                <button class="btn-principal" id="btn-salvar-modal">Salvar Registro</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-sobreposicao oculto" id="modal-rotina">
+        <div class="modal-conteudo">
+            <div class="modal-cabecalho">
+                <h3 id="modal-titulo-dia-rotina">Rotina do Dia</h3>
+                <button class="btn-fechar-modal" id="btn-fechar-modal-rotina">Fechar</button>
+            </div>
+
+            <div class="modal-corpo">
+
+                <div class="tracker-card card-azul">
+                    <h3>Água</h3>
+                    <div class="barra-progresso-container">
+                        <div class="barra-progresso-fluido" id="progresso-agua-modal"></div>
+                    </div>
+                    <div class="controles-alinhados">
+                        <span class="valor-tracker" id="texto-agua-modal">0ml / 2000ml</span>
+                        <button class="btn-pequeno" id="btn-adicionar-agua-modal">+250ml</button>
+                    </div>
+                </div>
+
+                <div class="tracker-card card-vinho">
+                    <h3>Sono</h3>
+                    <div class="grupo-input-linha">
+                        <div>
+                            <p class="rotulo-input">Hora que deitou</p>
+                            <input type="time" class="input-editorial" id="rotina-sono-deitar">
+                        </div>
+                        <div>
+                            <p class="rotulo-input">Hora que acordou</p>
+                            <input type="time" class="input-editorial" id="rotina-sono-acordar">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tracker-card card-marrom">
+                    <h3>Refeições</h3>
+                    <div class="grupo-checkboxes">
+                        <label class="check-editorial"><input type="checkbox" id="rotina-cafe-manha"> Café da Manhã</label>
+                        <label class="check-editorial"><input type="checkbox" id="rotina-almoco"> Almoço</label>
+                        <label class="check-editorial"><input type="checkbox" id="rotina-cafe-tarde"> Café da Tarde</label>
+                        <label class="check-editorial"><input type="checkbox" id="rotina-jantar"> Jantar</label>
+                    </div>
+                </div>
+
+                <div class="tracker-card card-rosa">
+                    <h3>Exercício</h3>
+                    <div class="grupo-input-linha">
+                        <div>
+                            <p class="rotulo-input">Tipo</p>
+                            <input type="text" class="input-editorial" id="rotina-exercicio-tipo" placeholder="Ex: Corrida">
+                        </div>
+                        <div>
+                            <p class="rotulo-input">Duração (min)</p>
+                            <input type="number" min="0" class="input-editorial" id="rotina-exercicio-duracao" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tracker-card card-azul">
+                    <h3>Estudo e Tela</h3>
+                    <div class="grupo-input-linha">
+                        <div>
+                            <p class="rotulo-input">Tempo de estudo (min)</p>
+                            <input type="number" min="0" class="input-editorial" id="rotina-estudo-min" placeholder="0">
+                        </div>
+                        <div>
+                            <p class="rotulo-input">Tempo de tela (min)</p>
+                            <input type="number" min="0" class="input-editorial" id="rotina-tela-min" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tracker-card card-vinho">
+                    <h3>Medicação / Suplementos</h3>
+                    <p class="rotulo-input">Separe por vírgula</p>
+                    <input type="text" class="input-editorial" id="rotina-medicacao" placeholder="Ex: Vitamina D, Omega 3">
+                </div>
+
+                <div id="container-listas-do-dia"></div>
+
+                <button class="btn-salvar-rotina" id="btn-salvar-rotina-modal">Salvar Rotina do Dia</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-sobreposicao oculto" id="modal-lista">
+        <div class="modal-conteudo">
+            <div class="modal-cabecalho">
+                <h3 id="modal-titulo-lista">Nova Lista</h3>
+                <button class="btn-fechar-modal" id="btn-fechar-modal-lista">Fechar</button>
+            </div>
+
+            <div class="modal-corpo">
+                <p class="rotulo-input">Título da lista</p>
+                <input type="text" class="input-editorial" id="lista-titulo" placeholder="Ex: Hábitos de manhã">
+
+                <p class="rotulo-input">Finalidade</p>
+                <input type="text" class="input-editorial" id="lista-finalidade" placeholder="Ex: Hábitos pra começar bem o dia">
+
+                <p class="rotulo-input">Meta semanal (opcional)</p>
+                <input type="number" min="0" max="7" class="input-editorial" id="lista-meta-semanal" placeholder="Ex: 4 (vezes por semana)">
+
+                <p class="rotulo-input">Itens da lista</p>
+                <div id="container-itens-lista"></div>
+                <button class="btn-pequeno" id="btn-adicionar-item-lista">+ Adicionar item</button>
+
+                <button class="btn-principal" id="btn-salvar-lista">Salvar Lista</button>
+                <button class="btn-pequeno-login oculto" id="btn-excluir-lista">Excluir esta lista</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="menu-rodape">
+        <button class="menu-item ativo" data-tela="tela-inicio">Início</button>
+        <button class="menu-item" data-tela="tela-diario">Diário</button>
+        <button class="menu-item" data-tela="tela-rotina">Rotina</button>
+        <button class="menu-item" data-tela="tela-listas">Listas</button>
+        <button class="menu-item" data-tela="tela-estatisticas">Stats</button>
+    </nav>
+
+    <footer class="creditos-finais">
+        <p>Desenvolvido de forma exclusiva para você.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
